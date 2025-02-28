@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task-Management-App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Task Manager</h1>
+    <div class="container">
+        <form id="task-form">
+            <input type="text" id="task-title" placeholder="Task Title" required>
+            <textarea id="task-description" placeholder="Task Description"></textarea>
+            <input type="date" id="task-due-date" required>
+            <select id="task-priority" required>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+            <button type="submit">Add Task</button>
+        </form>
+
+        <div class="filters">
+            <label>Filter</label>
+            <select id="filter-priority">
+                <option value="all">All Priorities</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+
+            <select id="filter-due-date">
+                <option value="all">All Due Dates</option>
+                <option value="today">Today</option>
+                <option value="week">Next 7 days</option>
+            </select>
+
+            <select id="filter-status">
+                <option value="all">All Tasks</option>
+                <option value="pending">Pending</option>
+                <option value="completed">Completed</option>
+            </select>
+
+            <button id="apply-filters">Apply Filters</button>
+        </div>
+    </div>
+
+    <div class="com-pen-div">
+        <div class="pending-div">
+            <h2>Pending Tasks</h2>
+            <ul id="pending-tasks-list"></ul>
+        </div>
+
+        <div class="completed-div">
+            <h2>Completed Tasks</h2>
+            <ul id="completed-tasks-list"></ul>
+        </div>
+    </div>
+
+    <script src="./code.js"></script>
+</body>
+</html>
