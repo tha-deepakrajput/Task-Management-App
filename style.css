@@ -127,6 +127,7 @@ li {
 
 .completed {
     background-color: #e9ecef;
+    text-decoration: line-through;
     color: #6c757d;
     border: 1px solid black;
 }

@@ -10,10 +10,6 @@ const applyFiltersButton = document.getElementById('apply-filters');
 // This is to load the tasks from the local storage or initialize an empty array 
 let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
-// Using add event listener on form : 
-taskForm.addEventListener('submit', addTask);
-
-
 // This function is to save the tasks to the local storage : 
 function saveTasks() {
     localStorage.setItem('tasks', JSON.stringify(tasks));
@@ -155,6 +151,9 @@ function renderTasks() {
 
 // add event listner on the apply filter button : 
 applyFiltersButton.addEventListener('click', renderTasks);
+
+// Using add event listener on form : 
+taskForm.addEventListener('submit', addTask);
 
 // This function is to add a new task : 
 function addTask(e) {
