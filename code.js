@@ -6,6 +6,7 @@ const filterPriority = document.getElementById('filter-priority');
 const filterDueDate = document.getElementById('filter-due-date');
 const filterStatus = document.getElementById('filter-status');
 const applyFiltersButton = document.getElementById('apply-filters');
+const progressTasksList = document.getElementById('progress-tasks-list');
 
 // This is to load the tasks from the local storage or initialize an empty array 
 let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
@@ -69,6 +70,7 @@ function renderTasks() {
 
     // Here we are clearing the current tasks list : 
     pendingTasksList.innerHTML = '';
+    progressTasksList.innerHTML = '';
     completedTasksList.innerHTML = '';
 
     for (let i = 0; i < tasks.length; i++) {
@@ -103,6 +105,14 @@ function renderTasks() {
 
             li.className = `task-priority-${task.priority}`;
 
+            // if the task is completed, add the "In-progress" class to the list item : 
+            if (task.status === 'In-progress') {
+                li.classList.add('In-progress');
+            }
+            else {
+                li.classList.remove('In-progress');
+            }
+            
             // If the task is completed, add the "completed" class to the list item : 
             if (task.status === 'completed') {
                 li.classList.add('completed');
@@ -125,14 +135,22 @@ function renderTasks() {
 
             // Here we are adding the "complete" or "Mark as Pending" button based on the task's status
             if (task.status === 'pending') {
-                
+    
                 // If the task is pending then add a "complete" button : 
                 li.innerHTML += `<button class="complete" onclick="markAsCompleted(${task.id})">complete</button>`;
+                li.innerHTML += `<button class="In-progress" onclick="markAsInProgress(${task.id})">In Progress</button>`;
+            }
+            else if (task.status === 'In-progress') {
+                
+                // if the task is in the progress then add "mark as completed" and "mark as pending" buttons
+                li.innerHTML += `<button class="complete" onclick="markAsCompleted(${task.id})">complete</button>`;
+                li.innerHTML += `<button class="pending" onclick="markAsPending(${task.id})">Mark as Pending</button>`; 
             }
             else {
-                
-                // If the task is completed then add a "Mark as pending" button : 
+
+                // If the task is completed then add  "Mark as pending" and "Mark as In-progress" buttons : 
                 li.innerHTML += `<button class="pending" onclick="markAsPending(${task.id})">Mark as Pending</button>`; 
+                li.innerHTML += `<button class="In-progress" onclick="markAsInProgress(${task.id})">In Progress</button>`;
             }
 
             // Here we are closing the 'task-actions' div : 
@@ -141,6 +159,9 @@ function renderTasks() {
             // Append the task to the appropriate list based on its status : 
             if (task.status === 'pending') {
                 pendingTasksList.appendChild(li);
+            }
+            else if (task.status === 'In-progress') {
+                progressTasksList.appendChild(li);
             }
             else {
                 completedTasksList.appendChild(li);
@@ -226,6 +247,17 @@ window.markAsCompleted = (id) => {
 
         // Update the task status : 
         task.status = 'completed';
+        saveTasks();
+        renderTasks();
+    }
+}
+
+// Function to mark the tasks as progress tasks :
+window.markAsInProgress = (id) => {
+    const task = tasks.find(task => task.id === id);
+
+    if (task) {
+        task.status = 'In-progress';
         saveTasks();
         renderTasks();
     }
